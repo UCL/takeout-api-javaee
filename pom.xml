@@ -14,6 +14,7 @@
     
     <dep.javaee.version>8.0</dep.javaee.version>
     <plu.war.version>3.2.1</plu.war.version>
+    <plu.gfembedded.version>5.0</plu.gfembedded.version>
   </properties>
   
   <dependencies>
@@ -34,6 +35,53 @@
         <configuration>
           <failOnMissingWebXml>false</failOnMissingWebXml>
         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.glassfish.embedded</groupId>
+        <artifactId>maven-embedded-glassfish-plugin</artifactId>
+        <version>${plu.gfembedded.version}</version>
+        <configuration>
+          <app>target/${project.build.finalName}.${project.packaging}</app>
+          <port>8081</port>
+          <contextRoot>${project.artifactId}</contextRoot>
+          <name>${project.artifactId}</name>
+        </configuration>
+        <executions>
+          <execution>
+            <id>start-container</id>
+            <phase>pre-integration-test</phase>
+            <goals>
+              <goal>start</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>admin-tasks</id>
+            <phase>pre-integration-test</phase>
+            <goals>
+              <goal>admin</goal>
+            </goals>
+            <configuration>
+              <commands>
+                <command>create-jdbc-connection-pool --restype javax.sql.DataSource --datasourceclassname org.apache.derby.jdbc.ClientDataSource dataPool</command>
+                <command>create-jdbc-resource --connectionpoolid dataPool jdbc/takeout</command>
+              </commands>
+            </configuration>
+          </execution>
+          <execution>
+            <id>deploy-app</id>
+            <phase>pre-integration-test</phase>
+            <goals>
+              <goal>deploy</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>stop-container</id>
+            <phase>post-integration-test</phase>
+            <goals>
+              <goal>stop</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>

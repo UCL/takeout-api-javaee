@@ -16,14 +16,15 @@ import javax.persistence.Id;
 public class TakeoutEntity implements Serializable {
 
   private static final long serialVersionUID = 1L;
+
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
-  
+
   private JsonObject totalsByDate;
-  
+
   private Integer totalQueries;
-  
+
   private LocalDate startDate;
 
   public Long getId() {
@@ -58,5 +59,5 @@ public class TakeoutEntity implements Serializable {
   public String toString() {
     return "ucl.cs.fmedia.takeout.TakeoutEntity[ id=" + id + " ]";
   }
-  
+
 }
