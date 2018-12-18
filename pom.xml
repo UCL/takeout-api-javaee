@@ -15,6 +15,8 @@
     <dep.javaee.version>8.0</dep.javaee.version>
     <plu.war.version>3.2.1</plu.war.version>
     <plu.gfembedded.version>5.0</plu.gfembedded.version>
+    <plu.pgembedded.version>1.2.2</plu.pgembedded.version>
+    <plu.pgjdbc.version>42.2.5</plu.pgjdbc.version>
   </properties>
   
   <dependencies>
@@ -37,6 +39,41 @@
         </configuration>
       </plugin>
       <plugin>
+        <groupId>com.github.slavaz</groupId>
+        <artifactId>embedded-postgresql-maven-plugin</artifactId>
+        <version>${plu.pgembedded.version}</version>
+        <dependencies>
+          <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>1.6.4</version>
+          </dependency>
+        </dependencies>
+        <configuration>
+          <pgServerVersion>latest</pgServerVersion>
+          <pgServerPort>15432</pgServerPort>
+          <dbName>DB_NAME</dbName>
+          <userName>USER_NAME</userName>
+          <password>PASSWORD</password>
+        </configuration>
+        <executions>
+          <execution>
+            <id>start-pgsql</id>
+            <phase>pre-integration-test</phase>
+            <goals>
+              <goal>start</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>stop-pgsql</id>
+            <phase>post-integration-test</phase>
+            <goals>
+              <goal>stop</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
         <groupId>org.glassfish.embedded</groupId>
         <artifactId>maven-embedded-glassfish-plugin</artifactId>
         <version>${plu.gfembedded.version}</version>
@@ -46,6 +83,13 @@
           <contextRoot>${project.artifactId}</contextRoot>
           <name>${project.artifactId}</name>
         </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${plu.pgjdbc.version}</version>
+          </dependency>
+        </dependencies>
         <executions>
           <execution>
             <id>start-container</id>
@@ -62,8 +106,9 @@
             </goals>
             <configuration>
               <commands>
-                <command>create-jdbc-connection-pool --restype javax.sql.DataSource --datasourceclassname org.apache.derby.jdbc.ClientDataSource dataPool</command>
+                <command>create-jdbc-connection-pool --restype javax.sql.ConnectionPoolDataSource --datasourceclassname org.postgresql.ds.PGConnectionPoolDataSource --property portNumber=15432:user=USER_NAME:password=PASSWORD:databaseName=DB_NAME:serverName=localhost dataPool</command>
                 <command>create-jdbc-resource --connectionpoolid dataPool jdbc/takeout</command>
+                <command>ping-connection-pool dataPool</command>
               </commands>
             </configuration>
           </execution>
