@@ -9,9 +9,7 @@ import javax.persistence.Converter;
 
 import java.sql.SQLException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Unit tests for @see ucl.cs.fmedia.takeout.JsonObjectConverter
@@ -40,6 +38,7 @@ public class JsonObjectConverterTest {
     Object result = instance.convertToDatabaseColumn(jsonObject);
     assertTrue(result instanceof PGobject);
     assertEquals("json", ((PGobject) result).getType(), "PGobject to be of type json");
+    assertEquals("{\"id\":1}", ((PGobject) result).getValue());
   }
 
   /**
@@ -54,6 +53,15 @@ public class JsonObjectConverterTest {
     pgObject.setValue("{\"id\": 1}");
     JsonObject result = instance.convertToEntityAttribute(pgObject);
     assertEquals(1, result.getInt("id"));
+  }
+
+  @Test
+  public void testConvertToEntityAttributeNull() {
+    JsonObjectConverter instance = new JsonObjectConverter();
+    assertThrows(
+      IllegalArgumentException.class,
+      () -> instance.convertToEntityAttribute(null)
+    );
   }
 
 }

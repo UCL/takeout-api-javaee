@@ -9,6 +9,7 @@ import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 import java.io.StringReader;
 import java.sql.SQLException;
+import java.util.Optional;
 
 @Converter
 public class JsonObjectConverter implements AttributeConverter<JsonObject, Object> {
@@ -17,8 +18,10 @@ public class JsonObjectConverter implements AttributeConverter<JsonObject, Objec
   public Object convertToDatabaseColumn(JsonObject jsonObject) {
     PGobject pgObject = new PGobject();
     pgObject.setType("json");
+    Optional<JsonObject> jsonOptional = Optional.ofNullable(jsonObject);
+    String value = jsonOptional.map(JsonObject::toString).get();
     try {
-      pgObject.setValue(jsonObject.toString());
+      pgObject.setValue(value);
     } catch (SQLException e) {
       throw new IllegalArgumentException("Unable to serialise jsonObject input", e);
     }

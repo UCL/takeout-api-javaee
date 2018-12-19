@@ -22,6 +22,9 @@
     <plu.pgjdbc.version>42.2.5</plu.pgjdbc.version>
     <plu.surefire.version>2.22.1</plu.surefire.version>
     <plu.failsafe.version>2.22.1</plu.failsafe.version>
+    <plu.pitest.version>1.4.2</plu.pitest.version>
+    <plu.pitestjunit.version>0.7</plu.pitestjunit.version>
+    <plu.slf4j.version>1.6.4</plu.slf4j.version>
   </properties>
   
   <dependencies>
@@ -79,7 +82,7 @@
           <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
-            <version>1.6.4</version>
+            <version>${plu.slf4j.version}</version>
           </dependency>
         </dependencies>
         <configuration>
@@ -173,6 +176,18 @@
             </goals>
           </execution>
         </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.pitest</groupId>
+        <artifactId>pitest-maven</artifactId>
+        <version>${plu.pitest.version}</version>
+        <dependencies>
+          <dependency>
+            <groupId>org.pitest</groupId>
+            <artifactId>pitest-junit5-plugin</artifactId>
+            <version>${plu.pitestjunit.version}</version>
+          </dependency>
+        </dependencies>
       </plugin>
     </plugins>
   </build>
