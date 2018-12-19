@@ -37,6 +37,10 @@ public class TakeoutEntity implements Serializable {
     this.id = id;
   }
 
+  public void setTotalQueries(Integer totalQueries) { this.totalQueries = totalQueries; }
+
+  public void setStartDate(LocalDate startDate) { this.startDate = startDate; }
+
   @Override
   public int hashCode() {
     int hash = 0;
