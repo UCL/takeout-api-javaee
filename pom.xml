@@ -13,6 +13,7 @@
     <maven.compiler.target>1.8</maven.compiler.target>
     
     <dep.javaee.version>8.0</dep.javaee.version>
+    <dep.jsonp.version>1.1</dep.jsonp.version>
     <dep.junit.version>5.3.2</dep.junit.version>
     
     <plu.war.version>3.2.1</plu.war.version>
@@ -31,6 +32,11 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
+      <groupId>org.postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+      <version>${plu.pgjdbc.version}</version>
+    </dependency>
+    <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-api</artifactId>
       <version>${dep.junit.version}</version>
@@ -40,6 +46,12 @@
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-engine</artifactId>
       <version>${dep.junit.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish</groupId>
+      <artifactId>javax.json</artifactId>
+      <version>${dep.jsonp.version}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>

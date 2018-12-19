@@ -3,6 +3,7 @@ package ucl.cs.fmedia.takeout;
 import java.io.Serializable;
 import java.time.LocalDate;
 import javax.json.JsonObject;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,6 +22,7 @@ public class TakeoutEntity implements Serializable {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
 
+  @Convert(converter = JsonObjectConverter.class)
   private JsonObject totalsByDate;
 
   private Integer totalQueries;

@@ -1,10 +1,8 @@
 package ucl.cs.fmedia.takeout;
 
 import java.lang.reflect.Field;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -73,6 +71,23 @@ public class TakeoutEntityTest {
     );
     assertEquals("", generatedValue.generator());
     assertNotNull(field.getAnnotation(Id.class), "Expect field to be annotated as @Id");
+  }
+
+  /**
+   * Test totalsByDate has all required annotations
+   *
+   * @throws NoSuchFieldException
+   */
+  @Test
+  public void testTotalsByDate() throws NoSuchFieldException {
+    Class<TakeoutEntity> clTakeout = TakeoutEntity.class;
+    Field field = clTakeout.getDeclaredField("totalsByDate");
+    Convert convert = field.getAnnotation(Convert.class);
+    assertEquals(
+      JsonObjectConverter.class,
+      convert.converter(),
+      "Expect field to be configured with a @Convert annotation, set to JsonObjectConverter"
+    );
   }
 
 }
