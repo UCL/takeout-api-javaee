@@ -15,7 +15,8 @@
     <dep.javaee.version>8.0</dep.javaee.version>
     <dep.jsonp.version>1.1</dep.jsonp.version>
     <dep.junit.version>5.3.2</dep.junit.version>
-    
+    <dep.jersey.version>2.27</dep.jersey.version>
+    <dep.jmockit.version>1.44</dep.jmockit.version>
     <plu.war.version>3.2.1</plu.war.version>
     <plu.gfembedded.version>5.0</plu.gfembedded.version>
     <plu.pgembedded.version>1.2.2</plu.pgembedded.version>
@@ -26,6 +27,13 @@
     <plu.pitestjunit.version>0.7</plu.pitestjunit.version>
     <plu.slf4j.version>1.6.4</plu.slf4j.version>
   </properties>
+
+  <repositories>
+    <repository>
+      <id>jitpack.io</id>
+      <url>https://jitpack.io</url>
+    </repository>
+  </repositories>
   
   <dependencies>
     <dependency>
@@ -52,9 +60,45 @@
       <scope>test</scope>
     </dependency>
     <dependency>
+      <groupId>org.jmockit</groupId>
+      <artifactId>jmockit</artifactId>
+      <version>${dep.jmockit.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
       <groupId>org.glassfish</groupId>
       <artifactId>javax.json</artifactId>
       <version>${dep.jsonp.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.jersey.test-framework</groupId>
+      <artifactId>jersey-test-framework-core</artifactId>
+      <version>${dep.jersey.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.jersey.media</groupId>
+      <artifactId>jersey-media-json-processing</artifactId>
+      <version>${dep.jersey.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.jersey.inject</groupId>
+      <artifactId>jersey-hk2</artifactId>
+      <version>${dep.jersey.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.jersey.test-framework.providers</groupId>
+      <artifactId>jersey-test-framework-provider-inmemory</artifactId>
+      <version>${dep.jersey.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.vintage</groupId>
+      <artifactId>junit-vintage-engine</artifactId>
+      <version>${dep.junit.version}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -65,6 +109,11 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <version>${plu.surefire.version}</version>
+        <configuration>
+          <argLine>
+            -javaagent:${settings.localRepository}/org/jmockit/jmockit/${dep.jmockit.version}/jmockit-${dep.jmockit.version}.jar
+          </argLine>
+        </configuration>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
