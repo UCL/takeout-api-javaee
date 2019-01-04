@@ -5,6 +5,10 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+/**
+ *
+ * @author David Guzman {@literal d.guzman at ucl.ac.uk}
+ */
 public class TakeoutModel implements Serializable {
 
   private int totalQueries;

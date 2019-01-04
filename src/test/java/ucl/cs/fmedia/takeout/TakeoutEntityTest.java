@@ -2,7 +2,7 @@ package ucl.cs.fmedia.takeout;
 
 import java.lang.reflect.Field;
 import java.time.LocalDate;
-import javax.json.JsonObject;
+import javax.json.JsonArray;
 import javax.persistence.*;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -56,7 +56,7 @@ public class TakeoutEntityTest {
       () -> assertNotNull(clTakeout.getDeclaredMethod("setId", Long.class)),
       () -> assertNotNull(clTakeout.getDeclaredMethod("setStartDate", LocalDate.class)),
       () -> assertNotNull(clTakeout.getDeclaredMethod("setTotalQueries", Integer.class)),
-      () -> assertNotNull(clTakeout.getDeclaredMethod("setTotalsByDate", JsonObject.class))
+      () -> assertNotNull(clTakeout.getDeclaredMethod("setTotalsByDate", JsonArray.class))
     );
   }
 

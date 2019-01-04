@@ -11,6 +11,10 @@ import java.io.StringReader;
 import java.sql.SQLException;
 import java.util.Optional;
 
+/**
+ *
+ * @author David Guzman {@literal d.guzman at ucl.ac.uk}
+ */
 @Converter
 public class JsonObjectConverter implements AttributeConverter<JsonObject, Object> {
 
