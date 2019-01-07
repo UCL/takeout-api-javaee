@@ -5,7 +5,6 @@ import javax.json.JsonObject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.NoSuchElementException;
 
@@ -19,18 +18,6 @@ public class TakeoutBean {
 
   @PersistenceContext
   private EntityManager entityManager;
-
-  public void addEntry(TakeoutModel model) {
-    TakeoutEntity entity = new TakeoutEntity();
-    entity.setTotalQueries(model.getTotalQueries());
-    LocalDate localDate = model
-      .getStartDate()
-      .toInstant()
-      .atZone(ZoneId.systemDefault())
-      .toLocalDate();
-    entity.setStartDate(localDate);
-    entityManager.persist(entity);
-  }
 
   public void persistEntry(JsonObject entry) {
     TakeoutEntity entity = new TakeoutEntity();
