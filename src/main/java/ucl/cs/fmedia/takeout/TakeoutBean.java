@@ -1,6 +1,8 @@
 package ucl.cs.fmedia.takeout;
 
 import javax.ejb.Stateless;
+import javax.json.Json;
+import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -27,7 +29,10 @@ public class TakeoutBean {
     if (!entry.containsKey("totalsByDate")) {
       throw new NoSuchElementException("totalsByDate JsonArray is missing");
     }
-    entity.setTotalsByDate(entry.getJsonArray("totalsByDate"));
+    JsonArray jsonArray = entry.getJsonArray("totalsByDate");
+    // wrap array in an object
+    JsonObject jsonTotalsByDate = Json.createObjectBuilder().add("totalsByDate", jsonArray).build();
+    entity.setTotalsByDate(jsonTotalsByDate);
     entityManager.persist(entity);
   }
 

@@ -2,7 +2,7 @@ package ucl.cs.fmedia.takeout;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import javax.json.JsonArray;
+import javax.json.JsonObject;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,7 +23,7 @@ public class TakeoutEntity implements Serializable {
   private Long id;
 
   @Convert(converter = JsonObjectConverter.class)
-  private JsonArray totalsByDate;
+  private JsonObject totalsByDate;
 
   private Integer totalQueries;
 
@@ -37,7 +37,7 @@ public class TakeoutEntity implements Serializable {
     this.id = id;
   }
 
-  public void setTotalsByDate(JsonArray totalsByDate) { this.totalsByDate = totalsByDate; }
+  public void setTotalsByDate(JsonObject totalsByDate) { this.totalsByDate = totalsByDate; }
 
   public void setTotalQueries(Integer totalQueries) { this.totalQueries = totalQueries; }
 

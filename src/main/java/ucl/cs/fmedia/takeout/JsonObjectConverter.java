@@ -21,10 +21,10 @@ public class JsonObjectConverter implements AttributeConverter<JsonObject, Objec
   @Override
   public Object convertToDatabaseColumn(JsonObject jsonObject) {
     PGobject pgObject = new PGobject();
-    pgObject.setType("json");
     Optional<JsonObject> jsonOptional = Optional.ofNullable(jsonObject);
     String value = jsonOptional.map(JsonObject::toString).get();
     try {
+      pgObject.setType("json");
       pgObject.setValue(value);
     } catch (SQLException e) {
       throw new IllegalArgumentException("Unable to serialise jsonObject input", e);
