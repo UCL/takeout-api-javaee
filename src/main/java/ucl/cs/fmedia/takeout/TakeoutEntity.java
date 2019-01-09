@@ -27,6 +27,7 @@ public class TakeoutEntity implements Serializable {
 
   private Integer totalQueries;
 
+  @Convert(converter = LocalDateConverter.class)
   private LocalDate startDate;
 
   public Long getId() {
@@ -37,9 +38,15 @@ public class TakeoutEntity implements Serializable {
     this.id = id;
   }
 
+  public JsonObject getTotalsByDate() { return totalsByDate; }
+
   public void setTotalsByDate(JsonObject totalsByDate) { this.totalsByDate = totalsByDate; }
 
+  public Integer getTotalQueries() { return totalQueries; }
+
   public void setTotalQueries(Integer totalQueries) { this.totalQueries = totalQueries; }
+
+  public LocalDate getStartDate() { return startDate; }
 
   public void setStartDate(LocalDate startDate) { this.startDate = startDate; }
 
