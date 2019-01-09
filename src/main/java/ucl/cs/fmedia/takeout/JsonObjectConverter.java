@@ -39,7 +39,9 @@ public class JsonObjectConverter implements AttributeConverter<JsonObject, Objec
       JsonReader jsonReader = Json.createReader(new StringReader(value));
       return jsonReader.readObject();
     } else {
-      throw new IllegalArgumentException("Unable to deserialise jsonObject input");
+      throw new IllegalArgumentException(
+        "Unable to deserialise jsonObject input. Check that data type of database column in PostgreSQL is set to JSON"
+      );
     }
   }
 }
