@@ -32,7 +32,7 @@ public class JerseyClientToPersistInPgIT {
 
   @Test
   public void testFromHttpPostToPersistInPg() {
-    String jsonString = "{\"startDate\": \"2019-02-01\", \"totalQueries\": 200, \"totalsByDate\": [{\"date\": \"2019-02-01\"}]}";
+    String jsonString = "{\"startDate\": \"2019-02-01T11:34:54.723Z\", \"totalQueries\": 200, \"totalsByDate\": [{\"date\": \"2019-02-01\"}]}";
     JsonObject jsonObject = Json.createReader(new StringReader(jsonString))
       .readObject();
     Response response = client.target("http://localhost:8081/takeout-api-javaee")
@@ -54,7 +54,7 @@ public class JerseyClientToPersistInPgIT {
 
   @Test
   public void testCorsRequest() {
-    String jsonString = "{\"startDate\": \"2019-02-01\", \"totalQueries\": 200, \"totalsByDate\": [{\"date\": \"2019-02-01\"}]}";
+    String jsonString = "{\"startDate\": \"2019-02-01T11:34:54.723Z\", \"totalQueries\": 200, \"totalsByDate\": [{\"date\": \"2019-02-01\"}]}";
     JsonObject jsonObject = Json.createReader(new StringReader(jsonString))
       .readObject();
     System.setProperty("sun.net.http.allowRestrictedHeaders", "true");
