@@ -4,7 +4,6 @@ import org.glassfish.jersey.logging.LoggingFeature;
 import org.junit.jupiter.api.Test;
 
 import javax.json.Json;
-import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
@@ -32,7 +31,7 @@ public class JerseyClientToPersistInPgIT {
 
   @Test
   public void testFromHttpPostToPersistInPg() {
-    String jsonString = "{\"startDate\": \"2019-02-01T11:34:54.723Z\", \"totalQueries\": 200, \"totalsByDate\": [{\"date\": \"2019-02-01\"}]}";
+    String jsonString = "{\"startDate\": \"2019-02-01T11:34:54.723Z\", \"totalQueries\": 200, \"totalsByDate\": {\"2019-02-01\": 123}}";
     JsonObject jsonObject = Json.createReader(new StringReader(jsonString))
       .readObject();
     Response response = client.target("http://localhost:8081/takeout-api-javaee")
@@ -47,14 +46,13 @@ public class JerseyClientToPersistInPgIT {
     assertEquals(1, takeoutentity.size());
     assertEquals("2019-02-01", takeoutentity.get(0).getStartDate().toString());
     assertEquals(200, takeoutentity.get(0).getTotalQueries().intValue());
-    JsonArray totalsByDate = takeoutentity.get(0).getTotalsByDate().getJsonArray("totalsByDate");
-    assertEquals(1, totalsByDate.size());
-    assertEquals("2019-02-01", totalsByDate.getJsonObject(0).getString("date"));
+    JsonObject totalsByDate = takeoutentity.get(0).getTotalsByDate();
+    assertEquals(123, totalsByDate.getInt("2019-02-01"));
   }
 
   @Test
   public void testCorsRequest() {
-    String jsonString = "{\"startDate\": \"2019-02-01T11:34:54.723Z\", \"totalQueries\": 200, \"totalsByDate\": [{\"date\": \"2019-02-01\"}]}";
+    String jsonString = "{\"startDate\": \"2019-02-01T11:34:54.723Z\", \"totalQueries\": 200, \"totalsByDate\": {\"2019-02-01\": 123}}";
     JsonObject jsonObject = Json.createReader(new StringReader(jsonString))
       .readObject();
     System.setProperty("sun.net.http.allowRestrictedHeaders", "true");
@@ -73,9 +71,8 @@ public class JerseyClientToPersistInPgIT {
     assertEquals(1, takeoutentity.size());
     assertEquals("2019-02-01", takeoutentity.get(0).getStartDate().toString());
     assertEquals(200, takeoutentity.get(0).getTotalQueries().intValue());
-    JsonArray totalsByDate = takeoutentity.get(0).getTotalsByDate().getJsonArray("totalsByDate");
-    assertEquals(1, totalsByDate.size());
-    assertEquals("2019-02-01", totalsByDate.getJsonObject(0).getString("date"));
+    JsonObject totalsByDate = takeoutentity.get(0).getTotalsByDate();
+    assertEquals(123, totalsByDate.getInt("2019-02-01"));
   }
 
 }

@@ -26,7 +26,7 @@ public class TakeoutBeanTest {
 
   @Test
   public void testPersistEntryEntityManagerCalled() {
-    String jsonString = "{\"startDate\": \"2019-01-01T11:34:54.723Z\", \"totalQueries\": 100, \"totalsByDate\": [{\"date\": \"2019-01-01\"}]}";
+    String jsonString = "{\"startDate\": \"2019-01-01T11:34:54.723Z\", \"totalQueries\": 100, \"totalsByDate\": {\"2019-01-01\": 123}}";
     JsonObject jsonObject = Json.createReader(new StringReader(jsonString))
       .readObject();
     new Expectations() {{
