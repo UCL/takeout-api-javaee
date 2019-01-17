@@ -3,11 +3,7 @@ package ucl.cs.fmedia.takeout;
 import java.io.Serializable;
 import java.time.LocalDate;
 import javax.json.JsonObject;
-import javax.persistence.Convert;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  *
@@ -19,7 +15,8 @@ public class TakeoutEntity implements Serializable {
   private static final long serialVersionUID = 1L;
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "takeoutentity_id_seq")
+  @SequenceGenerator(name = "takeoutentity_id_seq", sequenceName = "takeoutentity_id_seq", allocationSize = 1)
   private Long id;
 
   @Convert(converter = JsonObjectConverter.class)

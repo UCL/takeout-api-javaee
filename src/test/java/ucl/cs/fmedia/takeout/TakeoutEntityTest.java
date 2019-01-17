@@ -75,11 +75,11 @@ public class TakeoutEntityTest {
     Field field = clTakeout.getDeclaredField("id");
     GeneratedValue generatedValue = field.getAnnotation(GeneratedValue.class);
     assertEquals(
-            GenerationType.AUTO,
+            GenerationType.SEQUENCE,
             generatedValue.strategy(),
             "Expect @GeneratedValue configured as strategy = GenerationType.AUTO"
     );
-    assertEquals("", generatedValue.generator());
+    assertEquals("takeoutentity_id_seq", generatedValue.generator());
     assertNotNull(field.getAnnotation(Id.class), "Expect field to be annotated as @Id");
   }
 
