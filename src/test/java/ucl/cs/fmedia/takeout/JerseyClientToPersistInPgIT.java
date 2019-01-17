@@ -50,29 +50,4 @@ public class JerseyClientToPersistInPgIT {
     assertEquals(123, totalsByDate.getInt("2019-02-01"));
   }
 
-  @Test
-  public void testCorsRequest() {
-    String jsonString = "{\"startDate\": \"2019-02-01T11:34:54.723Z\", \"totalQueries\": 200, \"totalsByDate\": {\"2019-02-01\": 123}}";
-    JsonObject jsonObject = Json.createReader(new StringReader(jsonString))
-      .readObject();
-    System.setProperty("sun.net.http.allowRestrictedHeaders", "true");
-    Response response = client.target("http://localhost:8081/takeout-api-javaee")
-      .path("/takeout/submit")
-      .request()
-      .header("Origin", "http://test.uk")
-      .header("Access-Control-Request-Method", "PUT")
-      .put(Entity.json(jsonObject));
-    assertEquals(200, response.getStatus());
-    assertEquals("*", response.getHeaderString("Access-Control-Allow-Origin"));
-    entityManager.getTransaction().begin();
-    List<TakeoutEntity> takeoutentity = entityManager.createQuery(
-      "SELECT t FROM TakeoutEntity t ORDER BY t.id DESC", TakeoutEntity.class
-    ).setMaxResults(1).getResultList();
-    assertEquals(1, takeoutentity.size());
-    assertEquals("2019-02-01", takeoutentity.get(0).getStartDate().toString());
-    assertEquals(200, takeoutentity.get(0).getTotalQueries().intValue());
-    JsonObject totalsByDate = takeoutentity.get(0).getTotalsByDate();
-    assertEquals(123, totalsByDate.getInt("2019-02-01"));
-  }
-
 }
