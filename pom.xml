@@ -12,21 +12,21 @@
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
 
-    <dep.eclipselink.version>2.7.3</dep.eclipselink.version>
+    <dep.eclipselink.version>2.7.4</dep.eclipselink.version>
     <dep.javaee.version>8.0</dep.javaee.version>
-    <dep.jsonp.version>1.1</dep.jsonp.version>
-    <dep.junit.version>5.3.2</dep.junit.version>
-    <dep.jersey.version>2.27</dep.jersey.version>
-    <dep.jmockit.version>1.44</dep.jmockit.version>
-    <plu.war.version>3.2.1</plu.war.version>
-    <plu.gfembedded.version>5.0</plu.gfembedded.version>
+    <dep.jsonp.version>1.1.4</dep.jsonp.version>
+    <dep.junit.version>5.4.2</dep.junit.version>
+    <dep.jersey.version>2.28</dep.jersey.version>
+    <dep.jmockit.version>1.46</dep.jmockit.version>
+    <plu.war.version>3.2.2</plu.war.version>
+    <plu.gfembedded.version>5.1</plu.gfembedded.version>
     <plu.pgembedded.version>1.2.2</plu.pgembedded.version>
     <plu.pgjdbc.version>42.2.5</plu.pgjdbc.version>
-    <plu.surefire.version>2.22.1</plu.surefire.version>
-    <plu.failsafe.version>2.22.1</plu.failsafe.version>
-    <plu.pitest.version>1.4.2</plu.pitest.version>
-    <plu.pitestjunit.version>0.7</plu.pitestjunit.version>
-    <plu.slf4j.version>1.6.4</plu.slf4j.version>
+    <plu.surefire.version>2.22.2</plu.surefire.version>
+    <plu.failsafe.version>2.22.2</plu.failsafe.version>
+    <plu.pitest.version>1.4.7</plu.pitest.version>
+    <plu.pitestjunit.version>0.8</plu.pitestjunit.version>
+    <plu.slf4j.version>1.7.26</plu.slf4j.version>
   </properties>
 
   <repositories>
