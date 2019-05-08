@@ -15,9 +15,9 @@
     <dep.eclipselink.version>2.7.4</dep.eclipselink.version>
     <dep.javaee.version>8.0</dep.javaee.version>
     <dep.jsonp.version>1.1.4</dep.jsonp.version>
-    <dep.junit.version>5.3.2</dep.junit.version>
+    <dep.junit.version>5.4.2</dep.junit.version>
     <dep.jersey.version>2.28</dep.jersey.version>
-    <dep.jmockit.version>1.44</dep.jmockit.version>
+    <dep.jmockit.version>1.46</dep.jmockit.version>
     <plu.war.version>3.2.2</plu.war.version>
     <plu.gfembedded.version>5.1</plu.gfembedded.version>
     <plu.pgembedded.version>1.2.2</plu.pgembedded.version>
