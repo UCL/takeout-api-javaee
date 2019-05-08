@@ -27,6 +27,7 @@
     <plu.pitest.version>1.4.7</plu.pitest.version>
     <plu.pitestjunit.version>0.8</plu.pitestjunit.version>
     <plu.slf4j.version>1.7.26</plu.slf4j.version>
+    <plu.spotbugs.version>3.1.11</plu.spotbugs.version>
   </properties>
 
   <repositories>
@@ -245,6 +246,23 @@
             <version>${plu.pitestjunit.version}</version>
           </dependency>
         </dependencies>
+      </plugin>
+      <plugin>
+        <groupId>com.github.spotbugs</groupId>
+        <artifactId>spotbugs-maven-plugin</artifactId>
+        <version>${plu.spotbugs.version}</version>
+        <configuration>
+          <effort>Max</effort>
+          <threshold>Low</threshold>
+          <failOnError>true</failOnError>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>
