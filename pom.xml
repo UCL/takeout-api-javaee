@@ -26,6 +26,7 @@
     <plu.failsafe.version>2.22.2</plu.failsafe.version>
     <plu.pitest.version>1.4.7</plu.pitest.version>
     <plu.pitestjunit.version>0.8</plu.pitestjunit.version>
+    <plu.pmd.version>3.12.0</plu.pmd.version>
     <plu.slf4j.version>1.7.26</plu.slf4j.version>
     <plu.spotbugs.version>3.1.11</plu.spotbugs.version>
   </properties>
@@ -246,6 +247,18 @@
             <version>${plu.pitestjunit.version}</version>
           </dependency>
         </dependencies>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-pmd-plugin</artifactId>
+        <version>${plu.pmd.version}</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
       <plugin>
         <groupId>com.github.spotbugs</groupId>
