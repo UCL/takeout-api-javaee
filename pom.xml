@@ -247,6 +247,14 @@
             <version>${plu.pitestjunit.version}</version>
           </dependency>
         </dependencies>
+        <configuration>
+          <jvmArgs>
+            <value>-javaagent:${settings.localRepository}/org/jmockit/jmockit/${dep.jmockit.version}/jmockit-${dep.jmockit.version}.jar</value>
+          </jvmArgs>
+          <excludedTestClasses>
+            <param>ucl.cs.fmedia.takeout.*IT</param>
+          </excludedTestClasses>
+        </configuration>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
