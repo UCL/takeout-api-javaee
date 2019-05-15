@@ -9,6 +9,7 @@ import javax.json.Json;
 import javax.json.JsonObject;
 import javax.persistence.EntityManager;
 import java.io.StringReader;
+import java.time.LocalDateTime;
 import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -37,11 +38,25 @@ public class TakeoutBeanTest {
   }
 
   @Test
-  public void tsetPersistEntryMissingElements() {
+  public void testPersistEntryMissingElements() {
     String jsonString = "{\"startDate\": \"2019-01-01T11:34:54.723Z\", \"totalQueries\": 100}";
     JsonObject jsonObject = Json.createReader(new StringReader(jsonString))
       .readObject();
     assertThrows(NoSuchElementException.class, () -> takeoutBean.persistEntry(jsonObject));
+  }
+
+  @Test
+  public void testPersistEntryStartDateInFuture() {
+    LocalDateTime tomorrow = LocalDateTime.now().plusDays(1);
+    String jsonTemplate = "{\"startDate\": \"%sZ\", \"totalQueries\": 100, \"totalsByDate\": {\"2019-01-01\": 123}}";
+    String jsonString = String.format(jsonTemplate, tomorrow.toString());
+    JsonObject jsonObject = Json.createReader(new StringReader(jsonString))
+      .readObject();
+    new Expectations() {{
+      entityManager.persist((TakeoutEntity) withNotNull());
+      result = null;
+    }};
+    takeoutBean.persistEntry(jsonObject);
   }
 
 }

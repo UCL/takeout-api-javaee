@@ -1,13 +1,20 @@
 package ucl.cs.fmedia.takeout;
 
+import java.io.StringReader;
 import java.lang.reflect.Field;
 import java.time.LocalDate;
+import java.util.Set;
+import javax.json.Json;
 import javax.json.JsonObject;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -98,6 +105,23 @@ public class TakeoutEntityTest {
       convert.converter(),
       "Expect field to be configured with a @Convert annotation, set to JsonObjectConverter"
     );
+  }
+
+  @Test
+  public void testStartDateValidator() {
+    TakeoutEntity takeoutEntity = new TakeoutEntity();
+    takeoutEntity.setId(0L);
+    takeoutEntity.setStartDate(LocalDate.now().plusDays(1));
+    takeoutEntity.setTotalQueries(1);
+    String jsonString = "{\"startDate\": \"2019-01-01T11:34:54.723Z\", \"totalQueries\": 100, \"totalsByDate\": {\"2019-01-01\": 123}}";
+    JsonObject jsonObject = Json.createReader(new StringReader(jsonString))
+      .readObject();
+    takeoutEntity.setTotalsByDate(jsonObject);
+    ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
+    Validator validator = validatorFactory.getValidator();
+    Set<ConstraintViolation<TakeoutEntity>> constraintViolationSet = validator.validate(takeoutEntity);
+    assertEquals( 1, constraintViolationSet.size() );
+    assertEquals( "startDate cannot be in the future", constraintViolationSet.iterator().next().getMessage() );
   }
 
 }
