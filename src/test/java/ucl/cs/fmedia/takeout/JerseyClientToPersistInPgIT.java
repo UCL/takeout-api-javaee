@@ -13,6 +13,7 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Feature;
 import javax.ws.rs.core.Response;
 import java.io.StringReader;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -48,6 +49,29 @@ public class JerseyClientToPersistInPgIT {
     assertEquals(200, takeoutentity.get(0).getTotalQueries().intValue());
     JsonObject totalsByDate = takeoutentity.get(0).getTotalsByDate();
     assertEquals(123, totalsByDate.getInt("2019-02-01"));
+    entityManager.remove(takeoutentity.get(0));
+    entityManager.getTransaction().commit();
   }
 
+  /**
+   * The property startDate cannot accept future dates
+   */
+  @Test
+  public void testFromHttpPostStartDateInFutureToPersistInPg() {
+    LocalDateTime tomorrow = LocalDateTime.now().plusDays(1);
+    String jsonTemplate = "{\"startDate\": \"%sZ\", \"totalQueries\": 100, \"totalsByDate\": {\"2019-01-01\": 123}}";
+    String jsonString = String.format(jsonTemplate, tomorrow.toString());
+    JsonObject jsonObject = Json.createReader(new StringReader(jsonString))
+      .readObject();
+    Response response = client.target("http://localhost:8081/takeout-api-javaee")
+      .path("/takeout/submit")
+      .request()
+      .put(Entity.json(jsonObject));
+    assertEquals(400, response.getStatus());
+    entityManager.getTransaction().begin();
+    List<TakeoutEntity> takeoutentity = entityManager.createQuery(
+      "SELECT t FROM TakeoutEntity t ORDER BY t.id DESC", TakeoutEntity.class
+    ).getResultList();
+    assertEquals(0, takeoutentity.size());
+  }
 }
