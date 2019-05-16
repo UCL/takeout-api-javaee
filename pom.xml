@@ -13,7 +13,9 @@
     <maven.compiler.target>1.8</maven.compiler.target>
 
     <dep.eclipselink.version>2.7.4</dep.eclipselink.version>
+    <dep.hibernatevalidator.version>6.0.2.Final</dep.hibernatevalidator.version>
     <dep.javaee.version>8.0</dep.javaee.version>
+    <dep.javaxel.version>3.0.1-b11</dep.javaxel.version>
     <dep.jsonp.version>1.1.4</dep.jsonp.version>
     <dep.junit.version>5.4.2</dep.junit.version>
     <dep.jersey.version>2.28</dep.jersey.version>
@@ -109,6 +111,18 @@
       <groupId>org.eclipse.persistence</groupId>
       <artifactId>eclipselink</artifactId>
       <version>${dep.eclipselink.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.hibernate.validator</groupId>
+      <artifactId>hibernate-validator</artifactId>
+      <version>${dep.hibernatevalidator.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish</groupId>
+      <artifactId>javax.el</artifactId>
+      <version>${dep.javaxel.version}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -247,6 +261,14 @@
             <version>${plu.pitestjunit.version}</version>
           </dependency>
         </dependencies>
+        <configuration>
+          <jvmArgs>
+            <value>-javaagent:${settings.localRepository}/org/jmockit/jmockit/${dep.jmockit.version}/jmockit-${dep.jmockit.version}.jar</value>
+          </jvmArgs>
+          <excludedTestClasses>
+            <param>ucl.cs.fmedia.takeout.*IT</param>
+          </excludedTestClasses>
+        </configuration>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>

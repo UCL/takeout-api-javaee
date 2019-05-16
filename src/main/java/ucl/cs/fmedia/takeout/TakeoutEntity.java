@@ -3,7 +3,13 @@ package ucl.cs.fmedia.takeout;
 import java.io.Serializable;
 import java.time.LocalDate;
 import javax.json.JsonObject;
-import javax.persistence.*;
+import javax.persistence.Convert;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.PastOrPresent;
 
 /**
  *
@@ -25,6 +31,7 @@ public class TakeoutEntity implements Serializable {
   private Integer totalQueries;
 
   @Convert(converter = LocalDateConverter.class)
+  @PastOrPresent(message = "startDate cannot be in the future")
   private LocalDate startDate;
 
   public Long getId() {
